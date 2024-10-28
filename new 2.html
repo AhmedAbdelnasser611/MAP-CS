@@ -14,12 +14,12 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-    <h3>Map of Locations Ahmed </h3>
+    <h3>Map of Locations CS.OBS offices & rests</h3>
     <div id="map"></div>
 
     <script>
         // إنشاء الخريطة وضبط المركز ومستوى التكبير
-        var map = L.map('map').setView([27.816572, 30.546781], 10);
+        var map = l.map('map').setView([27.816572, 30.546781], 10);
 
         // إضافة طبقة البلاط من OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -76,7 +76,7 @@
         locations.forEach(function(location, index) {
             var myIcon = index % 2 === 0 ? redIcon : blueIcon; // تبديل الأيقونات بالتناوب
             var marker = L.marker([location.lat, location.lon], {icon: myIcon}).addTo(map);
-            marker.bindPopup(<a href='https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lon}' target='_blank'>${location.name}</a>);
+            marker.bindPopup(`<a href='https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lon}' target='_blank'>${location.name}</a>`);
         });
     </script>
 </body>
