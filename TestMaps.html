@@ -80,7 +80,7 @@
         // إضافة العلامات لكل موقع مع تحديد لونين مختلفين بالتناوب
         locations.forEach(function(location, index) {
             var myIcon = index % 2 === 0 ? redIcon : blueIcon; // تبديل الأيقونات بالتناوب
-            var marker = L.marker([27.816572.lat, 30.546781.lon], {icon: 2})
+            var marker = L.marker([location.lat, location.lon], {icon: myIcon})
                 .bindPopup(`<a href='https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(location.lat)},${encodeURIComponent(location.lon)}' target='_blank'>${location.name}</a>`);
             markers.addLayer(marker); // إضافة العلامة إلى مجموعة التجميع
         });
