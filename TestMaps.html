@@ -11,7 +11,9 @@
         }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
 </head>
 <body>
     <h3>Map of Locations CS.OBS Offices & Rests</h3>
@@ -19,7 +21,7 @@
 
     <script>
         // إنشاء الخريطة وضبط المركز ومستوى التكبير
-        var map = l.map('map').setView([27.816572, 30.546781], 10);
+        var map = L.map('map').setView([27.816572, 30.546781], 10);
 
         // إضافة طبقة البلاط من OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -69,15 +71,22 @@
             {"name": "ابوالعباس", "lat": 28.5312264789434, "lon": 30.7432859390974},
             {"name": "بوش", "lat": 29.1476833, "lon": 31.1172683},
             {"name": "تلت", "lat": 28.855097576938, "lon": 30.8296101540327},
-            {"name": "تنده", "lat": 27.6816568, "lon": 30.7772453},
+            {"name": "تنده", "lat": 27.6816568, "lon": 30.7772453}
         ];
+
+        // إنشاء مجموعة لتجميع العلامات (Marker Cluster)
+        var markers = L.markerClusterGroup();
 
         // إضافة العلامات لكل موقع مع تحديد لونين مختلفين بالتناوب
         locations.forEach(function(location, index) {
             var myIcon = index % 2 === 0 ? redIcon : blueIcon; // تبديل الأيقونات بالتناوب
-            var marker = L.marker([location.lat, location.lon], {icon: myIcon}).addTo(map);
-            marker.bindPopup(`<a href='https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lon}' target='_blank'>${location.name}</a>`);
+            var marker = L.marker([location.lat, location.lon], {icon: myIcon})
+                .bindPopup(`<a href='https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(location.lat)},${encodeURIComponent(location.lon)}' target='_blank'>${location.name}</a>`);
+            markers.addLayer(marker); // إضافة العلامة إلى مجموعة التجميع
         });
+
+        // إضافة مجموعة التجميع إلى الخريطة
+        map.addLayer(markers);
     </script>
 </body>
 </html>
